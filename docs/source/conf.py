@@ -103,13 +103,12 @@ rst_epilog = """
 """.format(
     year=year
 )
-
+html_static_path = ["_static"]
 html_last_updated_fmt = "%b %d, %Y"
 html_title = "PyLops"
 html_short_title = "PyLops"
-html_logo = "_static/pylops.png"
-html_favicon = "_static/favicon.ico"
-html_static_path = ["_static"]
+html_logo = "pylops.png"
+html_favicon = "favicon.ico"
 html_extra_path = []
 pygments_style = "default"
 add_function_parentheses = False
@@ -122,6 +121,10 @@ html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     "logo_only": True,
     "display_version": True,
+    "logo": {
+      "image_light": "pylops.png",
+      "image_dark": "pylops.png",
+   }
 }
 html_context = {
     "menu_links_name": "Repository",
