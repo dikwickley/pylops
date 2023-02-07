@@ -115,3 +115,9 @@ h1 {
 .rst-content div.figure p.caption {
     font-style: normal;
 }
+
+/* Custom Docs Styling */
+
+.sphx-glr-multi-img{
+    max-width: 100%;
+}
