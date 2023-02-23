@@ -2,13 +2,19 @@ from pylops.signalprocessing import DTCWT
 import numpy as np
 import matplotlib.pyplot as plt
 
+n = 10
+nlevel = 4
 
-x = np.outer(np.arange(10), np.arange(10))
-x = np.arange(10) + 1
-
-DOp = DTCWT(dims=x.shape, nlevels=3) 
-
+print("1D")
+x = np.arange(n) + 1
+DOp = DTCWT(dims=x.shape, nlevels=nlevel) 
 y = DOp @ x
+
+# print("2D")
+# x2 = np.outer(np.arange(n), np.arange(n))
+# DOp2 = DTCWT(dims=x2.shape, nlevels=nlevel) 
+# y2 = DOp2 @ x2
+
 
 
 
@@ -21,7 +27,7 @@ print(y)
 print(i)
 
 # from matplotlib.pylab import *
-import dtcwt
+# import dtcwt
 
 # # Generate a 300x2 array of a random walk
 # vecs = np.cumsum(np.random.rand(300,1) - 0.5, 0)

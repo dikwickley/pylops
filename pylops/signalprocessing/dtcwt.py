@@ -36,16 +36,18 @@ class DTCWT(LinearOperator):
         if self.ndim == 1:
             self._transform = dtcwt.Transform1d(biort=biort, qshift=qshift)
         elif self.ndim == 2:
-            self._transform = dtcwt.Transform2d(biort=biort, qshift=qshift)
+            raise NotImplementedError("DTCWT is not implmented for 2D")
         elif self.ndim == 3:
-            self._transform = dtcwt.Transform3d(biort=biort, qshift=qshift, ext_mode=ext_mode)
+            raise NotImplementedError("DTCWT is not implmented for 3D")
         else:
             raise ValueError("DTCWT only supports 1D, 2D and 3D")
         
         pyr = self._transform.forward(np.ones(self.dims), nlevels=self.nlevels, include_scale=True)
         self.coeff_array_size = 0
         self.lowpass_size = len(pyr.lowpass)
+        self.slices = []
         for _h in pyr.highpasses:
+            self.slices.append(len(_h))
             self.coeff_array_size += len(_h)
         self.coeff_array_size += self.lowpass_size
 
@@ -59,18 +61,13 @@ class DTCWT(LinearOperator):
     
     def _array_to_coeff(self, X: NDArray) -> dtcwt.Pyramid:
         lowpass = np.array([x.real for x in X[-1*self.lowpass_size:]]).reshape((-1, 1))
-        _d = self.dims[0]
-        _n = self.nlevels
         _ptr = 0
         highpasses = ()
-        while _n:
-            _n-=1
-            _d = int((_d+1)/2)            
-            _h = X[_ptr:_ptr+_d]
-            _ptr += _d            
+        for _sl in self.slices:
+            _h = X[_ptr:_ptr+_sl]
+            _ptr += _sl 
             _h = _h.reshape((-1, 1))
             highpasses += (_h, )
-
         return dtcwt.Pyramid(lowpass,highpasses)
     
 
