@@ -3,21 +3,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+x = np.outer(np.arange(10), np.arange(10))
 x = np.arange(10) + 1
 
-
-DOp = DTCWT(dims=x.shape)
+DOp = DTCWT(dims=x.shape, nlevels=3) 
 
 y = DOp @ x
 
+
+
+
+i = DOp.H @ y
+
+print("final")
 print(x)
 print(y)
-
-
-plt.plot(x, color="black")
-plt.plot(y, color="gray")
-
-
+print(i)
 
 # from matplotlib.pylab import *
 import dtcwt
@@ -31,17 +32,17 @@ import dtcwt
 # title('Input')
 
 # # 1D transform, 5 levels
-transform = dtcwt.Transform1d()
-vecs_t = transform.forward(x, nlevels=5)
+# transform = dtcwt.Transform1d()
+# vecs_t = transform.forward(x, nlevels=5)
 
-# # Show level 2 highpass coefficient magnitudes
-# figure()
-plt.plot(np.abs(vecs_t.highpasses[0]), color="purple")
-plt.plot(np.abs(vecs_t.highpasses[1]), color="blue")
-plt.plot(np.abs(vecs_t.highpasses[2]), color="green")
+# # # Show level 2 highpass coefficient magnitudes
+# # figure()
+# plt.plot(np.abs(vecs_t.highpasses[0]), color="purple")
+# plt.plot(np.abs(vecs_t.highpasses[1]), color="blue")
+# plt.plot(np.abs(vecs_t.highpasses[2]), color="green")
 
 # title('Level 2 wavelet coefficient magnitudes')
-plt.show()
+# plt.show()
 # # Show last level lowpass image
 # figure()
 # plot(vecs_t.lowpass)
